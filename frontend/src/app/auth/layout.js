@@ -1,5 +1,6 @@
 'use client';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 
 export default function AuthLayout({ children }) {
 	const pathname = usePathname();
@@ -30,7 +31,7 @@ export default function AuthLayout({ children }) {
 					<div className="flex-1">
 						<div className="text-center">
 							<div className="flex justify-center mx-auto">
-								<img className="w-auto h-7 sm:h-8" src="https://merakiui.com/images/logo.svg" alt="" />
+								<Image className="w-auto h-7 sm:h-8" width={200} height={200} src="https://merakiui.com/images/logo.svg" alt="logo" />
 							</div>
 
 							<p className="mt-3 text-gray-500 dark:text-gray-300 text-2xl font-semibold">
