@@ -1,5 +1,4 @@
 import React from 'react';
-import AuthLayout from '../layout';
 import Link from 'next/link';
 
 const Login = () => {
@@ -39,7 +38,7 @@ const Login = () => {
 				</div>
 
 				<div className="mt-6">
-					<button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+					<button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-primary rounded-lg hover:bg-primary focus:outline-none focus:bg-primary focus:ring focus:ring-primary focus:ring-opacity-50">
 						Sign in
 					</button>
 				</div>
@@ -47,7 +46,7 @@ const Login = () => {
 
 			<p className="mt-6 text-sm text-center text-gray-400">
 				Don't have an account yet?{' '}
-				<Link href="/auth/signup" className="text-blue-500 focus:outline-none focus:underline hover:underline">
+				<Link href="/auth/signup" className="text-primary focus:outline-none focus:underline hover:underline">
 					Sign up
 				</Link>
 				.
