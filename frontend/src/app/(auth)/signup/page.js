@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-const Login = () => {
+const SignUp = () => {
 	return (
 		<>
 			<form>
@@ -23,9 +23,6 @@ const Login = () => {
 						<label htmlFor="password" className="text-sm text-gray-600 dark:text-gray-200">
 							Password
 						</label>
-						<a href="#" className="text-sm text-gray-400 focus:text-blue-500 hover:text-blue-500 hover:underline">
-							Forgot password?
-						</a>
 					</div>
 
 					<input
@@ -39,15 +36,14 @@ const Login = () => {
 
 				<div className="mt-6">
 					<button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-primary rounded-lg hover:bg-primary focus:outline-none focus:bg-primary focus:ring focus:ring-primary focus:ring-opacity-50">
-						Sign in
+						Sign up
 					</button>
 				</div>
 			</form>
-
 			<p className="mt-6 text-sm text-center text-gray-400">
-				Don't have an account yet?{' '}
-				<Link href="/auth/signup" className="text-primary focus:outline-none focus:underline hover:underline">
-					Sign up
+				Already have an account?{' '}
+				<Link href="/login" className="text-primary focus:outline-none focus:underline hover:underline">
+					Sign in
 				</Link>
 				.
 			</p>
@@ -55,4 +51,4 @@ const Login = () => {
 	);
 };
 
-export default Login;
+export default SignUp;

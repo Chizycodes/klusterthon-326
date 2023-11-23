@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 export default function AuthLayout({ children }) {
 	const pathname = usePathname();
-	const isLogin = pathname === '/auth/login';
+	const isLogin = pathname === '/login';
 	return (
 		<div className="bg-white dark:bg-gray-900">
 			<div className="flex justify-center h-screen">

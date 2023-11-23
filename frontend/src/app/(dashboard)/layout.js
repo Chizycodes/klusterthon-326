@@ -1,5 +1,5 @@
 import { Inter } from 'next/font/google';
-import '../styles/globals.css';
+import '@/styles/globals.css';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
 
 export const metadata = {
@@ -10,7 +10,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
-			<body className="">{children}</body>
+			<body className="">
+				<DashboardLayout children={children} />
+			</body>
 		</html>
 	);
 }
