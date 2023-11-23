@@ -18,14 +18,12 @@ const DashboardLayout = ({ children }) => {
 			>
 				<Aside />
 			</div>
-			<div
-				className={`lg:w-2/12 hidden lg:block w-5/6 max-w-64 fixed lg:relative`}
-			>
+			<div className={`lg:w-2/12 hidden lg:block w-5/6 max-w-64 fixed lg:relative`}>
 				<Aside />
 			</div>
-			<div className={`lg:w-10/12 w-full px-5`}>
+			<div className={`lg:w-10/12 w-full`}>
 				<Nav showAside={showAside} toggleAside={toggleAside} />
-				{children}
+				<div className='max-w-5xl mx-auto px-5'>{children}</div>
 			</div>
 		</div>
 	);

@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const SettingIcon = () => {
 	return (
 		<svg
@@ -8,7 +6,8 @@ export const SettingIcon = () => {
 			viewBox="0 0 24 24"
 			stroke-width="1.5"
 			stroke="currentColor"
-			className="w-5 h-5"
+			width="20"
+			height="20"
 		>
 			<path
 				stroke-linecap="round"
@@ -27,7 +26,8 @@ export const HistoryIcon = () => {
 			viewBox="0 0 24 24"
 			stroke-width="1.5"
 			stroke="currentColor"
-			className="w-5 h-5"
+			width="20"
+			height="20"
 		>
 			<path
 				stroke-linecap="round"
@@ -46,7 +46,8 @@ export const DiagnosisIcon = () => {
 			viewBox="0 0 24 24"
 			stroke-width="1.5"
 			stroke="currentColor"
-			className="w-5 h-5"
+			width="20"
+			height="20"
 		>
 			<path
 				stroke-linecap="round"
@@ -65,7 +66,8 @@ export const ProfileIcon = () => {
 			viewBox="0 0 24 24"
 			stroke-width="1.5"
 			stroke="currentColor"
-			className="w-5 h-5"
+			width="20"
+			height="20"
 		>
 			<path
 				stroke-linecap="round"
@@ -78,7 +80,14 @@ export const ProfileIcon = () => {
 
 export const MenuIcon = () => {
 	return (
-		<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width="20"
+			height="20"
+			fill="none"
+			viewBox="0 0 24 24"
+			stroke="currentColor"
+		>
 			<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" />
 		</svg>
 	);
