@@ -4,7 +4,7 @@ import React from 'react';
 
 const Nav = ({ showAside, toggleAside }) => {
 	return (
-		<div className="navbar bg-base-100 z-20 fixed left-0 lg:left-auto">
+		<div className="navbar dark:bg-gray-900 dark:border-gray-700 z-20 fixed left-0 lg:left-auto">
 			<div className="navbar-start">
 				<a className="btn btn-ghost text-xl">DiagnoSync</a>
 			</div>
