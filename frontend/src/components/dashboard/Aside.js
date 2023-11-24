@@ -27,8 +27,8 @@ const Aside = () => {
 	const pathname = usePathname();
 	return (
 		<aside className="flex flex-col w-full h-screen px-5 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
-			<Link href="/">
-				<Image width={200} height={200} className="w-auto h-7" src="https://merakiui.com/images/logo.svg" alt="" />
+			<Link href="/" className="text-primary font-bold text-2xl">
+				DiagnoSync
 			</Link>
 
 			<div className="flex flex-col justify-between flex-1 mt-6">

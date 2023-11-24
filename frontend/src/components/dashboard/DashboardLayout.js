@@ -11,19 +11,21 @@ const DashboardLayout = ({ children }) => {
 	};
 	return (
 		<div className="w-full flex">
+			{/* Show on small screen */}
 			<div
-				className={`lg:hidden max-w-64 fixed lg:relative ${
+				className={`lg:hidden w-80 max-w-full fixed lg:relative z-20 ${
 					showAside ? 'translate-x-0' : '-translate-x-full'
 				} transform transition-transform ease-in-out overflow-hidden`}
 			>
 				<Aside />
 			</div>
-			<div className={`lg:w-2/12 hidden lg:block w-5/6 max-w-64 fixed lg:relative`}>
+			{/* Show on large screen */}
+			<div className={`lg:w-80 hidden lg:block w-5/6 fixed lg:relative `}>
 				<Aside />
 			</div>
 			<div className={`lg:w-10/12 w-full`}>
 				<Nav showAside={showAside} toggleAside={toggleAside} />
-				<div className='max-w-5xl mx-auto px-5'>{children}</div>
+				<div className="max-w-5xl mx-auto px-5">{children}</div>
 			</div>
 		</div>
 	);

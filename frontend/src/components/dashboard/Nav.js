@@ -1,12 +1,13 @@
 'use client';
 import { MenuIcon } from '@/assets/svgIcons';
+import Link from 'next/link';
 import React from 'react';
 
 const Nav = ({ showAside, toggleAside }) => {
 	return (
 		<div className="navbar dark:bg-gray-900 dark:border-gray-700 z-20 fixed left-0 lg:left-auto">
-			<div className="navbar-start">
-				<a className="btn btn-ghost text-xl">DiagnoSync</a>
+			<div className="navbar-start lg:hidden">
+				<Link href="/" className="btn btn-ghost text-primary text-xl">DiagnoSync</Link>
 			</div>
 			<div className="navbar-end">
 				<div className="lg:hidden">
