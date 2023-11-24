@@ -6,35 +6,37 @@ const SignUp = () => {
 		<>
 			<form>
 				<div>
+					<label htmlFor="firstName" className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
+						First Name
+					</label>
+					<input type="text" name="firstName" id="firstName" placeholder="First Name" className="input-main" />
+				</div>
+
+				<div className="mt-4">
+					<label htmlFor="lastName" className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
+						Last Name
+					</label>
+					<input type="text" name="lastName" id="lastName" placeholder="Last Name" className="input-main" />
+				</div>
+
+				<div className="mt-4">
 					<label htmlFor="email" className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
 						Email Address
 					</label>
-					<input
-						type="email"
-						name="email"
-						id="email"
-						placeholder="example@example.com"
-						className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
-					/>
+					<input type="email" name="email" id="email" placeholder="example@example.com" className="input-main" />
 				</div>
 
-				<div className="mt-6">
+				<div className="mt-4">
 					<div className="flex justify-between mb-2">
 						<label htmlFor="password" className="text-sm text-gray-600 dark:text-gray-200">
 							Password
 						</label>
 					</div>
 
-					<input
-						type="password"
-						name="password"
-						id="password"
-						placeholder="Your Password"
-						className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
-					/>
+					<input type="password" name="password" id="password" placeholder="Your Password" className="input-main" />
 				</div>
 
-				<div className="mt-6">
+				<div className="mt-4">
 					<button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-primary rounded-lg hover:bg-primary focus:outline-none focus:bg-primary focus:ring focus:ring-primary focus:ring-opacity-50">
 						Sign up
 					</button>
