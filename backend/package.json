@@ -9,9 +9,6 @@
     "dev": "nodemon index"
   },
   "keywords": [],
-  "engines": {
-    "node": "16.0.0"
-  },
   "author": "Joy Okwudire",
   "license": "ISC",
   "dependencies": {
