@@ -1,9 +1,7 @@
 import express from 'express';
 import * as dotenv from 'dotenv';
 import cors from 'cors';
-
 import connectDB from './mongodb/connect.js';
-import users from './routes/users.js';
 import auth from './routes/auth.js';
 import errorHandler from './middleware/error.js';
 
@@ -14,7 +12,6 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.use('/api/users', users);
 app.use('/api/auth', auth);
 
 app.use(errorHandler);

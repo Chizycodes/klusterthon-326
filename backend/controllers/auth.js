@@ -8,6 +8,11 @@ import sendEmail from '../utils/sendEmail.js';
 export const register = asyncHandler(async (req, res, next) => {
 	const { name, email, password } = req.body;
 
+	const userExist = await User.findOne({ email });
+	if (userExist) {
+		return next(new ErrorResponse('User with email already exists', 401));
+	}
+
 	// Create user
 	const user = await User.create({
 		name,
