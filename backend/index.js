@@ -3,6 +3,7 @@ import * as dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './mongodb/connect.js';
 import auth from './routes/auth.js';
+import chat from './routes/chat.js';
 import errorHandler from './middleware/error.js';
 
 dotenv.config();
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use('/api/auth', auth);
+app.use('/api/session', chat);
 
 app.use(errorHandler);
 
