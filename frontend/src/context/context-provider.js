@@ -1,7 +1,11 @@
 import React, { createContext, useContext, useReducer } from 'react';
 
 const UserContext = createContext();
-let authToken = localStorage.getItem('authToken') || null;
+
+let authToken;
+if (typeof window !== 'undefined') {
+	authToken = localStorage.getItem('authToken') || '';
+}
 
 const initialState = {
 	user: null,
