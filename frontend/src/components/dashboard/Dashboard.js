@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Aside from './Aside';
 import Nav from './Nav';
 
-const DashboardLayout = ({ children }) => {
+const Dashboard = ({ children }) => {
 	const [showAside, setShowAside] = useState(false);
 
 	const toggleAside = () => {
@@ -31,4 +31,4 @@ const DashboardLayout = ({ children }) => {
 	);
 };
 
-export default DashboardLayout;
+export default Dashboard;
