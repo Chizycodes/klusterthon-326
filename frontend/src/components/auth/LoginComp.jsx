@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { redirect } from 'next/navigation';
 
 const schema = yup.object().shape({
 	email: yup.string().email('Invalid email').required('Email is required'),
@@ -32,6 +33,7 @@ const LoginComp = () => {
 			});
 			setLoading(false);
 			typeof window !== 'undefined' && window.localStorage.setItem('authToken', response?.data?.token);
+			redirect('/');
 		} catch (error) {
 			setLoading(false);
 			const err = error?.response?.data?.error;
