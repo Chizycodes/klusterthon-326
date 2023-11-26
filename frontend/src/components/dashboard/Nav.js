@@ -5,10 +5,15 @@ import React, { useState } from 'react';
 import { useUser } from '@/context/context-provider';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { getSessions } from '@/utils/api';
+import { usePathname } from 'next/navigation';
+import { menu } from '@/utils/constants';
+import Router from 'next/router';
 
 const Nav = ({ showAside, toggleAside }) => {
-	const { state, setCurrentSession } = useUser();
+	const { state, setCurrentSession, setChatSessions } = useUser();
 	const [loading, setLoading] = useState(false);
+	const pathname = usePathname();
 
 	const handleNewSession = async () => {
 		try {
@@ -24,30 +29,29 @@ const Nav = ({ showAside, toggleAside }) => {
 				}
 			);
 			setCurrentSession(response?.data?.data);
-			console.log(response?.data?.data);
+			await getSessions(state.token, setChatSessions);
+			if (pathname !== '/') {
+				Router.push('/');
+			}
 			setLoading(false);
 		} catch (error) {
 			setLoading(false);
 			const err = error?.response?.data?.error;
-			toast.error(err ?? 'An error occured');
+			toast.error(err);
 		}
 	};
 	return (
-		<div className="navbar dark:bg-gray-900 dark:border-gray-700 z-20 left-0 lg:left-auto">
+		<div className="navbar dark:bg-gray-900 dark:border-gray-700 z-20 left-0 lg:left-auto lg:px-10">
 			<div className="navbar-start lg:hidden">
 				<Link href="/" className="btn btn-ghost text-primary text-xl">
 					DiagnoSync
 				</Link>
 			</div>
 			<div className="navbar-start hidden lg:block">
-				<h2 href="/" className=" text-white text-md">
-					{state?.currentSession?.title}
+				<h2 className="font-bold text-white text-xl">
+					{pathname === '/' ? state?.currentSession?.title : menu.find((item) => item.link === pathname)?.text}
 				</h2>
 			</div>
-
-			{/* <div className="navbar-center">
-			hello
-			</div> */}
 
 			<div className="navbar-end">
 				<div className="lg:hidden">
@@ -59,10 +63,10 @@ const Nav = ({ showAside, toggleAside }) => {
 				<div className="hidden lg:block">
 					<button
 						onClick={handleNewSession}
-						className="px-4 py-2 bg-primary disabled:opacity-5 text-white rounded-md"
+						className="px-4 py-2 bg-primary disabled:opacity-50 text-white rounded-md font-bold flex items-center justify-center"
 						disabled={loading}
 					>
-						New session
+						New session {loading && <span className="loading loading-spinner loading-md"></span>}
 					</button>
 				</div>
 			</div>

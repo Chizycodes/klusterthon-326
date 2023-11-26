@@ -21,7 +21,7 @@
     @apply block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40
   } 
   .button-main {
-    @apply w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-primary rounded-lg hover:bg-primary focus:outline-none focus:bg-primary focus:ring focus:ring-primary focus:ring-opacity-50 flex justify-center gap-2
+    @apply w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-primary rounded-lg hover:bg-primary focus:outline-none focus:bg-primary focus:ring focus:ring-primary focus:ring-opacity-50 flex justify-center gap-2 disabled:opacity-50
   }
 }
 

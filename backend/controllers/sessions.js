@@ -1,6 +1,7 @@
 import ErrorResponse from '../utils/errorResponse.js';
 import Session from '../mongodb/models/session.js';
 import asyncHandler from '../middleware/async.js';
+import Chat from '../mongodb/models/chat.js';
 
 // Get sessions
 export const fetchSessions = asyncHandler(async (req, res, next) => {
@@ -44,5 +45,27 @@ export const updateSession = asyncHandler(async (req, res, next) => {
 	res.status(200).json({
 		success: true,
 		data: session,
+	});
+});
+
+// Delete a user's session with all the chats
+export const deleteSession = asyncHandler(async (req, res, next) => {
+	const session = await Session.findById(req.params.id);
+
+	if (!session) {
+		return next(new ErrorResponse(`Session not found with id of ${req.params.id}`, 404));
+	}
+
+	const chatIds = session.chats.map((chat) => chat.toString());
+
+	// Delete associated chats
+	await Chat.deleteMany({ _id: { $in: chatIds } });
+
+	// Delete the session
+	await Session.findByIdAndDelete(req.params.id);
+
+	res.status(200).json({
+		success: true,
+		data: {},
 	});
 });

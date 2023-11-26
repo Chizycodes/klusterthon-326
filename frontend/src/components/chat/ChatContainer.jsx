@@ -4,6 +4,7 @@ import ChatInput from './ChatInput';
 import { useUser } from '@/context/context-provider';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import StartSession from './StartSession';
 
 const ChatContainer = () => {
 	const { state } = useUser();
@@ -40,17 +41,21 @@ const ChatContainer = () => {
 
 	return (
 		<div className="mx-auto p-4 w-full h-[90vh] flex">
-			<div className="w-full flex flex-col justify-end">
-				<div className="overflow-y-auto pb-5">
-					<div className="">
-						{messages?.map((msg, index) => (
-							<ChatMessage key={index} message={msg.content} isUser={msg.role === 'user'} />
-						))}
+			{state.chatSessions?.length ? (
+				<div className="w-full flex flex-col justify-end">
+					<div className="overflow-y-auto pb-5">
+						<div className="">
+							{messages?.map((msg, index) => (
+								<ChatMessage key={index} message={msg.content} isUser={msg.role === 'user'} />
+							))}
+						</div>
 					</div>
+					{loading && <span className="loading loading-dots loading-md mt-3"></span>}
+					<ChatInput onSendMessage={handleSendMessage} loading={loading} />
 				</div>
-				{loading && <span className="loading loading-dots loading-md mt-3"></span>}
-				<ChatInput onSendMessage={handleSendMessage} loading={loading} />
-			</div>
+			) : (
+				<StartSession />
+			)}
 		</div>
 	);
 };
