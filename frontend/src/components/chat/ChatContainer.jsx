@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useState } from 'react';
 import ChatMessage from './ChatMessage';
 import ChatInput from './ChatInput';
@@ -5,13 +6,17 @@ import { useUser } from '@/context/context-provider';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import StartSession from './StartSession';
+import { useParams } from 'next/navigation';
+import { getSession, getSessions } from '@/utils/api';
 
 const ChatContainer = () => {
-	const { state } = useUser();
+	const { state, setCurrentSession, setChatSessions } = useUser();
+
+	const { id } = useParams();
+
 	const [messages, setMessages] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [lastSession, setLastSession] = useState({});
-	const sessionId = lastSession?._id;
 
 	const handleSendMessage = async (message) => {
 		const data = { content: message, role: 'user' };
@@ -19,7 +24,7 @@ const ChatContainer = () => {
 
 		try {
 			setLoading(true);
-			const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/session/${sessionId}/chat`, data, {
+			const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/session/${lastSession?._id}/chat`, data, {
 				headers: {
 					'Content-Type': 'application/json',
 					authorization: `Bearer ${state?.token}`,
@@ -34,10 +39,20 @@ const ChatContainer = () => {
 		}
 	};
 
+	const getSessionMessages = async (id) => {
+		const response = await getSession(state.token, setCurrentSession, id);
+		setMessages(response?.chats || []);
+		setLastSession(response || {});
+	};
+
 	useEffect(() => {
-		setLastSession(state?.chatSessions[0]);
-		setMessages(state.chatSessions[0]?.chats);
-	}, [state?.chatSessions]);
+		if (id) {
+			getSessionMessages(id);
+		} else {
+			setLastSession(state?.chatSessions[0]);
+			setMessages(state.chatSessions[0]?.chats || []);
+		}
+	}, [state?.chatSessions, id]);
 
 	return (
 		<div className="mx-auto p-4 w-full h-[90vh] flex">

@@ -33,4 +33,22 @@ const getSessions = async (token, setChatSessions) => {
 	}
 };
 
-export { getUser, getSessions };
+const getSession = async (token, setCurrentSession, id) => {
+	try {
+		const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/session/${id}`, {
+			headers: {
+				'Content-Type': 'application/json',
+				authorization: `Bearer ${token}`,
+			},
+		});
+		const data = response?.data?.data;
+		console.log(data, "d");
+		setCurrentSession(data);
+		return data;
+	} catch (error) {
+		const err = error?.response?.data?.error;
+		toast.error(err);
+	}
+};
+
+export { getUser, getSessions, getSession };

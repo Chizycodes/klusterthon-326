@@ -10,6 +10,16 @@ import { menu } from '@/utils/constants';
 const Aside = () => {
 	const pathname = usePathname();
 	const { state, logout } = useUser();
+
+	const isActiveLink = (itemLink) => {
+		const pathname = usePathname();
+		return (
+			(pathname === itemLink && itemLink !== '/') ||
+			(itemLink === '/' && !pathname.startsWith('/')) ||
+			(pathname.startsWith(itemLink) && itemLink !== '/')
+		);
+	};
+
 	return (
 		<aside className="flex flex-col w-full h-screen px-5 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
 			<Link href="/" className="text-primary font-bold text-2xl">
@@ -22,7 +32,7 @@ const Aside = () => {
 						<Link
 							key={index}
 							className={`flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700 ${
-								pathname === item.link ? 'bg-primary text-white' : ''
+								isActiveLink(item.link) ? 'bg-primary text-white' : ''
 							}`}
 							href={item.link}
 						>

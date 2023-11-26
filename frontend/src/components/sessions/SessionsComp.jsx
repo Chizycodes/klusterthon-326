@@ -57,7 +57,7 @@ const SessionsComp = () => {
 		<div className="flex flex-col gap-5 mt-5">
 			{state?.chatSessions?.map((item, i) => (
 				<div key={item?._id} className={`card text-primary-content bg-[#E9D7FA]`}>
-					<Link href="#">
+					<Link href={`/${item?._id}`}>
 						<div className="card-body">
 							<h2 className="card-title">{item?.title}</h2>
 							<p>{item?.createdAt && moment(item?.createdAt).format('MMMM D, YYYY')}</p>
