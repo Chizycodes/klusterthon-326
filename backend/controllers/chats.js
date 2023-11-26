@@ -2,8 +2,12 @@ import ErrorResponse from '../utils/errorResponse.js';
 import Chat from '../mongodb/models/chat.js';
 import Session from '../mongodb/models/session.js';
 import asyncHandler from '../middleware/async.js';
-import { Server } from 'socket.io';
-import generateAIResponse from '../utils/generateAIResponse.js';
+import { OpenAI } from 'openai';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
+
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 // Get chats in a session
 export const getSessionChats = asyncHandler(async (req, res, next) => {
@@ -16,50 +20,59 @@ export const getSessionChats = asyncHandler(async (req, res, next) => {
 	res.status(200).json({ success: true, data: session.chats });
 });
 
-//Add chats to session
+// Add chats to session
 export const updateSessionChats = asyncHandler(async (req, res, next) => {
 	req.body.user = req.user.id;
 	req.body.session = req.params.sessionId;
 	const session = await Session.findById(req.params.sessionId);
 
 	if (!session) {
-		return next(new ErrorResponse(`Session not found with id of ${id}`, 404));
+		return next(new ErrorResponse(`Session not found with id of ${req.params.sessionId}`, 404));
 	}
 
 	const { content, role, user } = req.body;
 
-	const newChat = new Chat(req.body);
+	// Get all chats in the session
+	const allChats = await Chat.find({ session: req.params.sessionId });
 
-	// Save the new chat
-	await newChat.save();
+	// Extract only the content and role properties from each chat
+	const simplifiedChats = allChats.map(({ content, role }) => ({ content, role }));
 
-	// Update the session with the new chat
-	session.chats.push(newChat);
+	try {
+		// Generate AI response
+		const aiResponse = await openai.chat.completions.create({
+			model: 'gpt-3.5-turbo',
+			messages: [
+				{
+					role: 'system',
+					content:
+						'Your name is DiagnoSync. You are a doctor. You are a health assistant. You can and only provide answers and diagnoses for health-related questions or concerns.',
+				},
+				...simplifiedChats,
+				{ content, role },
+			],
+		});
 
-	// Save the updated session
-	await session.save();
+		// Create a new chat for the user message and add it to the session
+		const newChat = new Chat(req.body);
+		await newChat.save();
+		session.chats.push(newChat);
+		await session.save();
 
-	// Generate AI response
-	const aiChats = [{ content, role }];
-	const aiResponse = await generateAIResponse(aiChats);
+		// Create a new chat for the AI response and add it to the session
+		const aiChat = new Chat({
+			content: aiResponse?.choices[0]?.message?.content,
+			role: 'assistant',
+			user,
+			session: req.body.session,
+		});
+		await aiChat.save();
+		session.chats.push(aiChat);
+		await session.save();
 
-	// Create a new chat for the AI response and add it to the session
-	const aiChat = new Chat({
-		content: aiResponse,
-		role: 'assistant',
-		user,
-		session: req.body.session,
-	});
-
-	// Save the AI chat
-	await aiChat.save();
-
-	// Update the session with the AI chat
-	session.chats.push(aiChat);
-
-	// Save the updated session
-	await session.save();
-
-	// Send a success response
-	res.status(200).json({ success: true, data: session });
+		res.status(200).json({ success: true, data: session });
+	} catch (error) {
+		// Handle errors and send an appropriate response
+		next(new ErrorResponse('Error generating AI response', 500));
+	}
 });
