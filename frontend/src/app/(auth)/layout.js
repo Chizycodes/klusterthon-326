@@ -2,7 +2,6 @@
 import { usePathname } from 'next/navigation';
 import BG from '@/assets/images/bg3.jpg';
 import { GoogleIcon } from '@/assets/svgIcons';
-import withAuth from '@/utils/withAuth';
 
 function AuthLayout({ children }) {
 	const pathname = usePathname();
@@ -70,4 +69,4 @@ function AuthLayout({ children }) {
 	);
 }
 
-export default withAuth(AuthLayout);
+export default AuthLayout;

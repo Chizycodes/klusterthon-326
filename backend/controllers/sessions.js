@@ -3,8 +3,8 @@ import Session from '../mongodb/models/session.js';
 import asyncHandler from '../middleware/async.js';
 
 // Get sessions
-export const getSessions = asyncHandler(async (req, res, next) => {
-	const sessions = await Session.find({ user: req.user.id });
+export const fetchSessions = asyncHandler(async (req, res, next) => {
+	const sessions = await Session.find({ user: req.user.id }).populate('chats');
 
 	res.status(200).json({ success: true, data: sessions });
 });
@@ -13,7 +13,14 @@ export const getSessions = asyncHandler(async (req, res, next) => {
 export const startSession = asyncHandler(async (req, res, next) => {
 	req.body.user = req.user.id;
 
-	const session = await Session.create(req.body);
+	// Get the number of existing sessions for the current user
+	const existingSessionsCount = await Session.countDocuments({ user: req.user.id });
+
+	// Set the title to the number of existing sessions plus 1
+	const session = await Session.create({
+		...req.body,
+		title: `Chat Session ${existingSessionsCount + 1}`,
+	});
 
 	res.status(201).json({
 		success: true,

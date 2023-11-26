@@ -1,26 +1,33 @@
 'use client';
 import { redirect } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useUser } from '@/context/context-provider';
-import { usePathname } from 'next/navigation';
 
 export default function withAuth(Component) {
 	return function WithAuth(props) {
 		const { state } = useUser();
-		const pathname = usePathname();
 
 		useEffect(() => {
-			if (pathname === '/login') {
-				if (state.isAuth) {
-					redirect('/');
-				}
-			} else {
-				if (!state.isAuth) {
+			if (state.isAuth !== null) {
+				if (state.isAuth === false) {
 					redirect('/login');
 				}
 			}
-		}, []);
+		}, [state.isAuth]);
 
-		return <Component {...props} />;
+		if (!state.isAuth) {
+			return (
+				<div className="w-screen h-screen flex items-center justify-center gap-3">
+					<h1 className="text-xl">DiagnoSync AI</h1>
+					<span className="loading loading-bars loading-lg"></span>
+				</div>
+			);
+		}
+
+		return (
+			<>
+				<Component {...props} />
+			</>
+		);
 	};
 }

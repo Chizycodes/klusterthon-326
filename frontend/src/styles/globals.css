@@ -47,4 +47,12 @@
     margin-left: 0;
     /* Adjust this value based on your design requirements */
   }
+
+  .scrollbarNone::-webkit-scrollbar {
+    display: none;
+  } 
+  .scrollbarNone {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }

@@ -10,7 +10,7 @@ const Dashboard = ({ children }) => {
 		setShowAside(!showAside);
 	};
 	return (
-		<div className="w-full flex">
+		<div className="w-full flex h-screen overflow-hidden">
 			{/* Show on small screen */}
 			<div
 				className={`lg:hidden w-80 max-w-full fixed lg:relative z-20 ${
@@ -23,9 +23,9 @@ const Dashboard = ({ children }) => {
 			<div className={`lg:w-80 hidden lg:block w-5/6 fixed lg:relative `}>
 				<Aside />
 			</div>
-			<div className={`lg:w-10/12 w-full`}>
+			<div className={`w-full h-full`}>
 				<Nav showAside={showAside} toggleAside={toggleAside} />
-				<div className="max-w-5xl mx-auto px-5">{children}</div>
+				<div className="max-w-5xl mx-auto px-5 ">{children}</div>
 			</div>
 		</div>
 	);

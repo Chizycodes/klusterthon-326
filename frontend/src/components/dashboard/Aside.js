@@ -26,7 +26,7 @@ const menu = [
 
 const Aside = () => {
 	const pathname = usePathname();
-	const { state } = useUser();
+	const { state, logout } = useUser();
 	return (
 		<aside className="flex flex-col w-full h-screen px-5 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
 			<Link href="/" className="text-primary font-bold text-2xl">
@@ -62,12 +62,13 @@ const Aside = () => {
 							<span className="text-sm font-medium text-gray-700 dark:text-gray-200">{state?.user?.name}</span>
 						</Link>
 
-						<Link
-							href="#"
-							className="text-gray-500 transition-colors duration-200 rotate-180 dark:text-gray-400 rtl:rotate-0 hover:text-blue-500 dark:hover:text-blue-400"
+						<div
+							onClick={() => logout()}
+							title="Logout"
+							className="btn btn-ghost text-gray-500 transition-colors duration-200 rotate-180 dark:text-gray-400 rtl:rotate-0 hover:text-blue-500 dark:hover:text-blue-400"
 						>
 							<ProfileIcon />
-						</Link>
+						</div>
 					</div>
 				</div>
 			</div>
