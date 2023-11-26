@@ -10,7 +10,7 @@ import { useParams } from 'next/navigation';
 import { getSession, getSessions } from '@/utils/api';
 
 const ChatContainer = () => {
-	const { state, setCurrentSession, setChatSessions } = useUser();
+	const { state, setCurrentSession } = useUser();
 
 	const { id } = useParams();
 
@@ -41,7 +41,7 @@ const ChatContainer = () => {
 
 	const getSessionMessages = async (id) => {
 		const response = await getSession(state.token, setCurrentSession, id);
-		console.log(response)
+
 		setMessages(response?.chats || []);
 		setLastSession(response || {});
 	};
