@@ -41,6 +41,7 @@ const ChatContainer = () => {
 
 	const getSessionMessages = async (id) => {
 		const response = await getSession(state.token, setCurrentSession, id);
+		console.log(response)
 		setMessages(response?.chats || []);
 		setLastSession(response || {});
 	};

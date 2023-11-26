@@ -3,21 +3,17 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { DiagnosisIcon, HistoryIcon, ProfileIcon, SettingIcon } from '@/assets/svgIcons';
-import { usePathname } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 import { useUser } from '@/context/context-provider';
 import { menu } from '@/utils/constants';
 
 const Aside = () => {
 	const pathname = usePathname();
+	const { id } = useParams();
 	const { state, logout } = useUser();
 
 	const isActiveLink = (itemLink) => {
-		const pathname = usePathname();
-		return (
-			(pathname === itemLink && itemLink !== '/') ||
-			(itemLink === '/' && !pathname.startsWith('/')) ||
-			(pathname.startsWith(itemLink) && itemLink !== '/')
-		);
+		return pathname === itemLink || (pathname === `/${id}` && itemLink === '/');
 	};
 
 	return (

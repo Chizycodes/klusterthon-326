@@ -11,6 +11,7 @@ const getUser = async (token, setUser) => {
 		});
 		const data = response?.data?.data;
 		setUser(data);
+		return data;
 	} catch (error) {
 		const err = error?.response?.data?.error;
 		toast.error(err);
@@ -27,6 +28,7 @@ const getSessions = async (token, setChatSessions) => {
 		});
 		const data = response?.data?.data;
 		setChatSessions(data?.reverse());
+		return data;
 	} catch (error) {
 		const err = error?.response?.data?.error;
 		toast.error(err);
@@ -42,7 +44,6 @@ const getSession = async (token, setCurrentSession, id) => {
 			},
 		});
 		const data = response?.data?.data;
-		console.log(data, "d");
 		setCurrentSession(data);
 		return data;
 	} catch (error) {

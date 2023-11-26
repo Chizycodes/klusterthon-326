@@ -6,7 +6,7 @@ import { useUser } from '@/context/context-provider';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { getSessions } from '@/utils/api';
-import { usePathname } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 import { menu } from '@/utils/constants';
 import { useRouter } from 'next/navigation';
 
@@ -14,6 +14,7 @@ const Nav = ({ showAside, toggleAside }) => {
 	const { state, setCurrentSession, setChatSessions } = useUser();
 	const [loading, setLoading] = useState(false);
 	const pathname = usePathname();
+	const { id } = useParams();
 	const router = useRouter();
 
 	const handleNewSession = async () => {
@@ -51,7 +52,7 @@ const Nav = ({ showAside, toggleAside }) => {
 			</div>
 			<div className="navbar-start hidden lg:block">
 				<h2 className="font-bold text-white text-xl">
-					{pathname === '/' ? state?.currentSession?.title : menu.find((item) => item.link === pathname)?.text}
+					{pathname === `/${id}` ? state?.currentSession?.title : menu.find((item) => item.link === pathname)?.text}
 				</h2>
 			</div>
 
