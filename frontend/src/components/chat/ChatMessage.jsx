@@ -8,7 +8,7 @@ const ChatMessage = ({ message, isUser }) => {
 	return (
 		<div className={`chat  ${isUser ? 'chat-end' : 'chat-start'}`}>
 			<div className="chat-image avatar">
-				<div className="w-10 h-10 rounded-full text-white uppercase bg-primary ">
+				<div className="w-10 h-10 rounded-full text-white uppercase bg-primary">
 					{isUser ? (
 						<div className="h-full flex items-center justify-center">{state?.user?.name?.slice(0, 2)}</div>
 					) : (

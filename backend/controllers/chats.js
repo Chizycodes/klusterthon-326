@@ -10,14 +10,14 @@ dotenv.config();
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 // Get chats in a session
-export const getSessionChats = asyncHandler(async (req, res, next) => {
+export const getSession = asyncHandler(async (req, res, next) => {
 	const session = await Session.findById(req.params.id).populate('chats');
 
 	if (!session) {
 		return next(new ErrorResponse(`Session not found with id of ${req.params.id}`, 404));
 	}
 
-	res.status(200).json({ success: true, data: session.chats });
+	res.status(200).json({ success: true, data: session });
 });
 
 // Add chats to session

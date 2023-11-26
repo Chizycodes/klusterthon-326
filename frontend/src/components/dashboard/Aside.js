@@ -3,30 +3,19 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { DiagnosisIcon, HistoryIcon, ProfileIcon, SettingIcon } from '@/assets/svgIcons';
-import { usePathname } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 import { useUser } from '@/context/context-provider';
-
-const menu = [
-	{
-		icon: <DiagnosisIcon />,
-		text: 'Get Diagnosis',
-		link: '/',
-	},
-	{
-		icon: <HistoryIcon />,
-		text: 'Diagnosis History',
-		link: '/history',
-	},
-	{
-		icon: <SettingIcon />,
-		text: 'Setting',
-		link: '/setting',
-	},
-];
+import { menu } from '@/utils/constants';
 
 const Aside = () => {
 	const pathname = usePathname();
+	const { id } = useParams();
 	const { state, logout } = useUser();
+
+	const isActiveLink = (itemLink) => {
+		return pathname === itemLink || (pathname === `/${id}` && itemLink === '/');
+	};
+
 	return (
 		<aside className="flex flex-col w-full h-screen px-5 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
 			<Link href="/" className="text-primary font-bold text-2xl">
@@ -39,7 +28,7 @@ const Aside = () => {
 						<Link
 							key={index}
 							className={`flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700 ${
-								pathname === item.link ? 'bg-primary text-white' : ''
+								isActiveLink(item.link) ? 'bg-primary text-white' : ''
 							}`}
 							href={item.link}
 						>
@@ -52,13 +41,9 @@ const Aside = () => {
 				<div className="mt-6">
 					<div className="flex items-center justify-between mt-6">
 						<Link href="#" className="flex items-center gap-x-2">
-							<Image
-								className="object-cover rounded-full h-7 w-7"
-								width={100}
-								height={100}
-								src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&h=634&q=80"
-								alt="avatar"
-							/>
+							<div className="w-8 h-8 rounded-full text-white uppercase bg-primary text-sm">
+								<div className="h-full flex items-center justify-center">{state?.user?.name?.slice(0, 2)}</div>
+							</div>
 							<span className="text-sm font-medium text-gray-700 dark:text-gray-200">{state?.user?.name}</span>
 						</Link>
 
