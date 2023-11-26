@@ -40,7 +40,7 @@ export const updateSessionChats = asyncHandler(async (req, res, next) => {
 
 	try {
 		// Generate AI response
-		const aiResponse = await openai.chat.completions.create({
+		const response = await openai.chat.completions.create({
 			model: 'gpt-3.5-turbo',
 			messages: [
 				{
@@ -53,6 +53,8 @@ export const updateSessionChats = asyncHandler(async (req, res, next) => {
 			],
 		});
 
+		const aiResponse = response?.choices[0]?.message;
+
 		// Create a new chat for the user message and add it to the session
 		const newChat = new Chat(req.body);
 		await newChat.save();
@@ -61,8 +63,7 @@ export const updateSessionChats = asyncHandler(async (req, res, next) => {
 
 		// Create a new chat for the AI response and add it to the session
 		const aiChat = new Chat({
-			content: aiResponse?.choices[0]?.message?.content,
-			role: 'assistant',
+			...aiResponse,
 			user,
 			session: req.body.session,
 		});
@@ -70,7 +71,7 @@ export const updateSessionChats = asyncHandler(async (req, res, next) => {
 		session.chats.push(aiChat);
 		await session.save();
 
-		res.status(200).json({ success: true, data: session });
+		res.status(200).json({ success: true, data: aiResponse });
 	} catch (error) {
 		// Handle errors and send an appropriate response
 		next(new ErrorResponse('Error generating AI response', 500));

@@ -1,12 +1,12 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { redirect } from 'next/navigation';
+import { useUser } from '@/context/context-provider';
 
 const schema = yup.object().shape({
 	email: yup.string().email('Invalid email').required('Email is required'),
@@ -15,6 +15,7 @@ const schema = yup.object().shape({
 
 const LoginComp = () => {
 	const [loading, setLoading] = useState(false);
+	const { setToken } = useUser();
 	const {
 		register,
 		handleSubmit,
@@ -31,13 +32,16 @@ const LoginComp = () => {
 					'Content-Type': 'application/json',
 				},
 			});
+			const token = response?.data?.token;
+
+			setToken({ isAuth: true, token });
+			typeof window !== 'undefined' && localStorage.setItem('authToken', token);
+			toast.success('Login successful');
 			setLoading(false);
-			typeof window !== 'undefined' && window.localStorage.setItem('authToken', response?.data?.token);
-			redirect('/');
 		} catch (error) {
 			setLoading(false);
 			const err = error?.response?.data?.error;
-			toast.error(err ?? 'An error occured');
+			toast.error(err);
 		}
 	};
 
