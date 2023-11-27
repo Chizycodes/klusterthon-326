@@ -4,9 +4,9 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useUser } from '@/context/context-provider';
+import Axios from '@/utils/axiosInterceptor';
 
 const schema = yup.object().shape({
 	email: yup.string().email('Invalid email').required('Email is required'),
@@ -27,11 +27,7 @@ const LoginComp = () => {
 	const onSubmit = async (data) => {
 		try {
 			setLoading(true);
-			const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, data, {
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			});
+			const response = await Axios.post(`/auth/login`, data);
 			const token = response?.data?.token;
 
 			setToken({ isAuth: true, token });

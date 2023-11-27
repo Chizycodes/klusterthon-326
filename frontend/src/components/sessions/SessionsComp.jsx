@@ -4,13 +4,13 @@ import { useUser } from '@/context/context-provider';
 import Link from 'next/link';
 import moment from 'moment';
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import MoreIcon from '@/assets/icons/more.svg';
 import Image from 'next/image';
 import { getSessions } from '@/utils/api';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import Axios from '@/utils/axiosInterceptor';
 
 const schema = yup.object().shape({
 	title: yup.string().required('Title is required').min(3),
@@ -34,12 +34,7 @@ const SessionsComp = () => {
 	const handleDelete = async (id) => {
 		try {
 			setLoading(true);
-			await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/session/${id}`, {
-				headers: {
-					'Content-Type': 'application/json',
-					authorization: `Bearer ${state?.token}`,
-				},
-			});
+			await Axios.delete(`/session/${id}`);
 			toast.success('Session deleted');
 			await getSessions(state.token, setChatSessions);
 			reset({ title: '' });
@@ -53,16 +48,7 @@ const SessionsComp = () => {
 	const handleRename = async (data) => {
 		try {
 			setLoading(true);
-			await axios.patch(
-				`${process.env.NEXT_PUBLIC_API_URL}/session/${id}`,
-				{ title: data?.title },
-				{
-					headers: {
-						'Content-Type': 'application/json',
-						authorization: `Bearer ${state?.token}`,
-					},
-				}
-			);
+			await Axios.patch(`/session/${id}`, { title: data?.title });
 			await getSessions(state.token, setChatSessions);
 			toast.success('Session updated');
 			setId('');
@@ -86,11 +72,7 @@ const SessionsComp = () => {
 						</div>
 					</Link>
 					<div className="dropdown dropdown-end absolute top-0 right-0">
-						<div
-							tabIndex={0}
-							role="button"
-							className="btn px-4 py-2 bg-transparent border-none"
-						>
+						<div tabIndex={0} role="button" className="btn px-4 py-2 bg-transparent border-none">
 							<Image src={MoreIcon} width={30} height={30} alt="more" />
 						</div>
 

@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import axios from 'axios';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { toast } from 'react-toastify';
 import { redirect } from 'next/navigation';
+import Axios from '@/utils/axiosInterceptor';
 
 const schema = yup.object().shape({
 	name: yup.string().required('Name is required'),
@@ -34,11 +34,7 @@ const SignUpComp = () => {
 	const onSubmit = async (data) => {
 		try {
 			setLoading(true);
-			const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, data, {
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			});
+			await Axios.post(`/auth/register`, data);
 			setLoading(false);
 			toast.success('Account created successfully');
 			redirect('/login');

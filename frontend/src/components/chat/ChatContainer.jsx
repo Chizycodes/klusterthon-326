@@ -4,10 +4,10 @@ import ChatMessage from './ChatMessage';
 import ChatInput from './ChatInput';
 import { useUser } from '@/context/context-provider';
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import StartSession from './StartSession';
 import { useParams } from 'next/navigation';
 import { getSession, getSessions } from '@/utils/api';
+import Axios from '@/utils/axiosInterceptor';
 
 const ChatContainer = () => {
 	const { state, setCurrentSession } = useUser();
@@ -24,7 +24,7 @@ const ChatContainer = () => {
 
 		try {
 			setLoading(true);
-			const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/session/${lastSession?._id}/chat`, data, {
+			const response = await Axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/session/${lastSession?._id}/chat`, data, {
 				headers: {
 					'Content-Type': 'application/json',
 					authorization: `Bearer ${state?.token}`,
