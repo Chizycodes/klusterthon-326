@@ -20,6 +20,7 @@ const SessionsComp = () => {
 	const { state, setChatSessions } = useUser();
 	const [loading, setLoading] = useState(false);
 	const [id, setId] = useState('');
+	const [showMore, setShowMore] = useState({});
 
 	const {
 		register,
@@ -59,10 +60,29 @@ const SessionsComp = () => {
 			const err = error?.response?.data?.error;
 		}
 	};
+
+	const handleMouseEnter = (cardId) => {
+		setShowMore((prevHoverStates) => ({
+			...prevHoverStates,
+			[cardId]: true,
+		}));
+	};
+
+	const handleMouseLeave = (cardId) => {
+		setShowMore((prevHoverStates) => ({
+			...prevHoverStates,
+			[cardId]: false,
+		}));
+	};
 	return (
 		<div className="flex flex-col gap-5 mt-5">
 			{state?.chatSessions?.map((item, i) => (
-				<div key={item?._id} className={`card shadow border dark:bg-gray-300 bg-white`}>
+				<div
+					key={item?._id}
+					className={`card card-compact shadow border dark:bg-gray-400 bg-white`}
+					onMouseEnter={() => handleMouseEnter(item?._id)}
+					onMouseLeave={() => handleMouseLeave(item?._id)}
+				>
 					<Link href={`/${item?._id}`}>
 						<div className="card-body">
 							<h2 className="card-title text-gray-700 dark:text-gray-900">{item?.title}</h2>
@@ -72,9 +92,11 @@ const SessionsComp = () => {
 						</div>
 					</Link>
 					<div className="dropdown dropdown-end absolute top-0 right-0">
-						<div tabIndex={0} role="button" className="btn px-4 py-2 bg-transparent border-none hover:bg-slate-400">
-							<Image src={MoreIcon} width={30} height={30} alt="more" />
-						</div>
+						{showMore[item?._id] && item?._id && (
+							<div tabIndex={0} role="button" className={`btn px-4 py-2 bg-transparent border-none hover:bg-slate-400`}>
+								<Image src={MoreIcon} width={30} height={30} alt="more" />
+							</div>
+						)}
 
 						<ul className="dropdown-content z-[1] menu p-2 border border-gray-300 shadow-md bg-gray-100 rounded-box w-52 dark:text-white text-gray-600 text-md">
 							<li className="dark:text-gray-600 hover:bg-primary hover:text-white rounded-lg">
