@@ -41,12 +41,12 @@ export const updateSessionChats = asyncHandler(async (req, res, next) => {
 	try {
 		// Generate AI response
 		const response = await openai.chat.completions.create({
-			model: 'gpt-3.5-turbo',
+			model: 'gpt-4',
 			messages: [
 				{
 					role: 'system',
 					content:
-						'Your name is DiagnoSync. You are a doctor. You are a health assistant. You can and only provide answers and diagnoses for health-related questions or concerns.',
+						'You are DiagnoSync, a health assistant. You are specialized in providing answers and diagnoses for health-related questions or concerns. Your responses should be strictly related to health. If a user asks a question that is not health-related, please respond by letting them know that you can only assist with health-related queries.',
 				},
 				...simplifiedChats,
 				{ content, role },
