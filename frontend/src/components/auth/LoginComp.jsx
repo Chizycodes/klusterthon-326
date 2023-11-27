@@ -19,6 +19,7 @@ const LoginComp = () => {
 	const {
 		register,
 		handleSubmit,
+		reset,
 		formState: { errors },
 	} = useForm({
 		resolver: yupResolver(schema),
@@ -33,6 +34,7 @@ const LoginComp = () => {
 			setToken({ isAuth: true, token });
 			typeof window !== 'undefined' && localStorage.setItem('authToken', token);
 			toast.success('Login successful');
+			reset();
 			setLoading(false);
 		} catch (error) {
 			setLoading(false);

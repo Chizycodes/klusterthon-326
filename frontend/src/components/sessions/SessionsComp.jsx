@@ -25,7 +25,6 @@ const SessionsComp = () => {
 	const {
 		register,
 		handleSubmit,
-		resetField,
 		reset,
 		formState: { errors },
 	} = useForm({
@@ -38,7 +37,7 @@ const SessionsComp = () => {
 			await Axios.delete(`/session/${id}`);
 			toast.success('Session deleted');
 			await getSessions(state.token, setChatSessions);
-			reset({ title: '' });
+			reset();
 			setLoading(false);
 		} catch (error) {
 			setLoading(false);
