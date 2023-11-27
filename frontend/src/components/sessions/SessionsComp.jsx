@@ -79,7 +79,7 @@ const SessionsComp = () => {
 			{state?.chatSessions?.map((item, i) => (
 				<div
 					key={item?._id}
-					className={`card card-compact shadow border dark:bg-gray-400 bg-white`}
+					className={`card card-compact shadow border dark:border-none dark:bg-gray-400 bg-white`}
 					onMouseEnter={() => handleMouseEnter(item?._id)}
 					onMouseLeave={() => handleMouseLeave(item?._id)}
 				>
