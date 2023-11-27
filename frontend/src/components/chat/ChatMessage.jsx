@@ -5,6 +5,10 @@ import { useUser } from '@/context/context-provider';
 
 const ChatMessage = ({ message, isUser }) => {
 	const { state } = useUser();
+
+	const renderMessage = () => {
+		return { __html: message };
+	};
 	return (
 		<div className={`chat  ${isUser ? 'chat-end' : 'chat-start'}`}>
 			<div className="chat-image avatar">
@@ -23,7 +27,11 @@ const ChatMessage = ({ message, isUser }) => {
 				</div>
 			</div>
 			<div className="chat-header">{isUser ? 'You' : 'AI'}</div>
-			<div className="chat-bubble">{message}</div>
+			{isUser ? (
+				<div className="chat-bubble text-slate-200">{message}</div>
+			) : (
+				<div className="chat-bubble text-slate-200" dangerouslySetInnerHTML={renderMessage(message)}></div>
+			)}
 		</div>
 	);
 };
