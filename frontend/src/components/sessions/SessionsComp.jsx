@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useUser } from '@/context/context-provider';
 import Link from 'next/link';
 import moment from 'moment';
@@ -21,6 +21,7 @@ const SessionsComp = () => {
 	const [loading, setLoading] = useState(false);
 	const [id, setId] = useState('');
 	const [showMore, setShowMore] = useState({});
+	const closeRef = useRef(null);
 
 	const {
 		register,
@@ -37,7 +38,6 @@ const SessionsComp = () => {
 			await Axios.delete(`/session/${id}`);
 			toast.success('Session deleted');
 			await getSessions(state.token, setChatSessions);
-			reset();
 			setLoading(false);
 		} catch (error) {
 			setLoading(false);
@@ -52,7 +52,8 @@ const SessionsComp = () => {
 			await getSessions(state.token, setChatSessions);
 			toast.success('Session updated');
 			setId('');
-			setTitle('');
+			reset();
+			closeRef.current.click();
 			setLoading(false);
 		} catch (error) {
 			setLoading(false);
@@ -121,7 +122,9 @@ const SessionsComp = () => {
 			<dialog id="renameModal" className="modal">
 				<div className="modal-box">
 					<form method="dialog">
-						<button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 dark:text-white">✕</button>
+						<button ref={closeRef} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 dark:text-white">
+							✕
+						</button>
 					</form>
 
 					<h3 className="font-bold text-lg mb-5 dark:text-white text-gray-700">Rename Session</h3>
