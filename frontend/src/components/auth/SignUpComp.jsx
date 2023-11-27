@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { toast } from 'react-toastify';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Axios from '@/utils/axiosInterceptor';
 
 const schema = yup.object().shape({
@@ -23,9 +23,11 @@ const schema = yup.object().shape({
 
 const SignUpComp = () => {
 	const [loading, setLoading] = useState(false);
+	const router = useRouter();
 	const {
 		register,
 		handleSubmit,
+		reset,
 		formState: { errors },
 	} = useForm({
 		resolver: yupResolver(schema),
@@ -37,7 +39,8 @@ const SignUpComp = () => {
 			await Axios.post(`/auth/register`, data);
 			setLoading(false);
 			toast.success('Account created successfully');
-			redirect('/login');
+			reset();
+			router.push('/login');
 		} catch (error) {
 			const err = error?.response?.data?.error;
 			toast.error(err);
