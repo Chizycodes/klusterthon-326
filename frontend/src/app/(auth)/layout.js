@@ -30,6 +30,7 @@ function AuthLayout({ children }) {
 				<div className="flex items-center w-full max-w-md px-6 mx-auto lg:w-2/6">
 					<div className="flex-1">
 						<div className="text-center">
+							<h2 className="lg:hidden text-3xl font-bold text-primary  sm:text-4xl">DiagnoSync AI</h2>
 							<p className="mt-3 text-gray-600 dark:text-gray-300 text-2xl font-semibold">
 								{isLogin ? 'Welcome back' : 'Create your account'}
 							</p>
