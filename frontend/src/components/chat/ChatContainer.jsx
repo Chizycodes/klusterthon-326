@@ -6,7 +6,7 @@ import { useUser } from '@/context/context-provider';
 import { toast } from 'react-toastify';
 import StartSession from './StartSession';
 import { useParams } from 'next/navigation';
-import { getSession, getSessions } from '@/utils/api';
+import { getSession } from '@/utils/api';
 import Axios from '@/utils/axiosInterceptor';
 
 const ChatContainer = () => {
@@ -15,6 +15,7 @@ const ChatContainer = () => {
 	const { id } = useParams();
 	const [messages, setMessages] = useState([]);
 	const [loading, setLoading] = useState(false);
+	const [loadMessages, setLoadMessages] = useState(false);
 	const [lastSession, setLastSession] = useState({});
 
 	const scrollToBottom = () => {
@@ -40,10 +41,12 @@ const ChatContainer = () => {
 	};
 
 	const getSessionMessages = async (id) => {
+		setLoadMessages(true);
 		const response = await getSession(state.token, setCurrentSession, id);
 
 		setMessages(response?.chats || []);
 		setLastSession(response || {});
+		setLoadMessages(false);
 	};
 
 	useEffect(() => {
@@ -68,14 +71,20 @@ const ChatContainer = () => {
 						style={{ scrollBehavior: 'smooth' }}
 						ref={chatContainerRef}
 					>
-						<div className="">
-							{messages?.map((msg, index) => (
-								<ChatMessage key={index} message={msg.content} isUser={msg.role === 'user'} />
-							))}
-						</div>
+						{loadMessages ? (
+							<div className="flex items-center justify-center w-full h-full">
+								<span className="loading loading-spinner loading-lg"></span>
+							</div>
+						) : (
+							<div className="">
+								{messages?.map((msg, index) => (
+									<ChatMessage key={index} message={msg.content} isUser={msg.role === 'user'} />
+								))}
+							</div>
+						)}
 					</div>
 					{loading && <span className="loading loading-dots loading-md mt-3"></span>}
-					<ChatInput onSendMessage={handleSendMessage} loading={loading} />
+					<ChatInput onSendMessage={handleSendMessage} loading={loading || loadMessages} />
 				</div>
 			) : (
 				<StartSession />
