@@ -3,12 +3,12 @@ import { MenuIcon } from '@/assets/svgIcons';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { useUser } from '@/context/context-provider';
-import axios from 'axios';
 import { toast } from 'react-toastify';
 import { getSessions } from '@/utils/api';
 import { useParams, usePathname } from 'next/navigation';
 import { menu } from '@/utils/constants';
 import { useRouter } from 'next/navigation';
+import Axios from '@/utils/axiosInterceptor';
 
 const Nav = ({ showAside, toggleAside }) => {
 	const { state, setCurrentSession, setChatSessions } = useUser();
@@ -20,7 +20,7 @@ const Nav = ({ showAside, toggleAside }) => {
 	const handleNewSession = async () => {
 		try {
 			setLoading(true);
-			const response = await axios.post(
+			const response = await Axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/session`,
 				{},
 				{
@@ -44,7 +44,7 @@ const Nav = ({ showAside, toggleAside }) => {
 	};
 
 	return (
-		<div className="navbar dark:bg-gray-900 dark:border-gray-700 z-20 left-0 lg:left-auto lg:px-10">
+		<div className="navbar dark:bg-gray-900 border-b dark:border-gray-700 border-gray-200 shadow z-20 left-0 lg:left-auto lg:px-10">
 			<div className="navbar-start lg:hidden">
 				<Link href="/" className="btn btn-ghost text-primary text-xl">
 					DiagnoSync

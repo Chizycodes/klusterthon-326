@@ -35,7 +35,11 @@ const StartSession = () => {
 				<div>
 					<div className="grid md:grid-cols-2 grid-cols-1 gap-4">
 						{recommend.map((item, i) => (
-							<div key={i} style={{ backgroundColor: item?.color }} className={`card text-primary-content`}>
+							<div
+								key={i}
+								style={{ backgroundColor: item?.color }}
+								className={`card dark:text-primary-content text-gray-700 `}
+							>
 								<div className="card-body">
 									<h2 className="card-title">{item?.title}</h2>
 									<p>{item?.recommend}</p>

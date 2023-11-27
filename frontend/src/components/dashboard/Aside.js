@@ -17,7 +17,7 @@ const Aside = () => {
 	};
 
 	return (
-		<aside className="flex flex-col w-full h-screen px-5 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
+		<aside className="flex flex-col w-full h-screen px-5 py-8 overflow-y-auto border-r rtl:border-r-0 rtl:border-l bg-gray-900 border-gray-700">
 			<Link href="/" className="text-primary font-bold text-2xl">
 				DiagnoSync
 			</Link>
@@ -27,7 +27,7 @@ const Aside = () => {
 					{menu.map((item, index) => (
 						<Link
 							key={index}
-							className={`flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700 ${
+							className={`flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg text-gray-300 hover:bg-gray-800 hover:text-gray-200 ${
 								isActiveLink(item.link) ? 'bg-primary text-white' : ''
 							}`}
 							href={item.link}
@@ -42,9 +42,11 @@ const Aside = () => {
 					<div className="flex items-center justify-between mt-6">
 						<Link href="#" className="flex items-center gap-x-2">
 							<div className="w-8 h-8 rounded-full text-white uppercase bg-primary text-sm">
-								<div className="h-full flex items-center justify-center">{state?.user?.name?.slice(0, 2)}</div>
+								<div className="h-full flex items-center justify-center text-white">
+									{state?.user?.name?.slice(0, 2)}
+								</div>
 							</div>
-							<span className="text-sm font-medium text-gray-700 dark:text-gray-200">{state?.user?.name}</span>
+							<span className="text-sm font-medium text-gray-200">{state?.user?.name}</span>
 						</Link>
 
 						<div

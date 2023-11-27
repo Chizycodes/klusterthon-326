@@ -1,14 +1,9 @@
-import axios from 'axios';
 import { toast } from 'react-toastify';
+import Axios from './axiosInterceptor';
 
 const getUser = async (token, setUser) => {
 	try {
-		const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/auth/user`, {
-			headers: {
-				'Content-Type': 'application/json',
-				authorization: `Bearer ${token}`,
-			},
-		});
+		const response = await Axios.get(`/auth/user`);
 		const data = response?.data?.data;
 		setUser(data);
 		return data;
@@ -20,12 +15,7 @@ const getUser = async (token, setUser) => {
 
 const getSessions = async (token, setChatSessions) => {
 	try {
-		const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/session`, {
-			headers: {
-				'Content-Type': 'application/json',
-				authorization: `Bearer ${token}`,
-			},
-		});
+		const response = await Axios.get(`/session`);
 		const data = response?.data?.data;
 		setChatSessions(data?.reverse());
 		return data;
@@ -37,12 +27,7 @@ const getSessions = async (token, setChatSessions) => {
 
 const getSession = async (token, setCurrentSession, id) => {
 	try {
-		const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/session/${id}`, {
-			headers: {
-				'Content-Type': 'application/json',
-				authorization: `Bearer ${token}`,
-			},
-		});
+		const response = await Axios.get(`/session/${id}`);
 		const data = response?.data?.data;
 		setCurrentSession(data);
 		return data;

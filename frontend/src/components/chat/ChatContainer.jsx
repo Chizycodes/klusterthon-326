@@ -1,22 +1,28 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ChatMessage from './ChatMessage';
 import ChatInput from './ChatInput';
 import { useUser } from '@/context/context-provider';
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import StartSession from './StartSession';
 import { useParams } from 'next/navigation';
-import { getSession, getSessions } from '@/utils/api';
+import { getSession } from '@/utils/api';
+import Axios from '@/utils/axiosInterceptor';
 
 const ChatContainer = () => {
 	const { state, setCurrentSession } = useUser();
-
+	const chatContainerRef = useRef(null);
 	const { id } = useParams();
-
 	const [messages, setMessages] = useState([]);
 	const [loading, setLoading] = useState(false);
+	const [loadMessages, setLoadMessages] = useState(false);
 	const [lastSession, setLastSession] = useState({});
+
+	const scrollToBottom = () => {
+		if (chatContainerRef.current) {
+			chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+		}
+	};
 
 	const handleSendMessage = async (message) => {
 		const data = { content: message, role: 'user' };
@@ -24,12 +30,7 @@ const ChatContainer = () => {
 
 		try {
 			setLoading(true);
-			const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/session/${lastSession?._id}/chat`, data, {
-				headers: {
-					'Content-Type': 'application/json',
-					authorization: `Bearer ${state?.token}`,
-				},
-			});
+			const response = await Axios.patch(`/session/${lastSession?._id}/chat`, data);
 			setMessages((prevMessages) => [...prevMessages, response?.data?.data]);
 			setLoading(false);
 		} catch (error) {
@@ -40,10 +41,12 @@ const ChatContainer = () => {
 	};
 
 	const getSessionMessages = async (id) => {
+		setLoadMessages(true);
 		const response = await getSession(state.token, setCurrentSession, id);
 
 		setMessages(response?.chats || []);
 		setLastSession(response || {});
+		setLoadMessages(false);
 	};
 
 	useEffect(() => {
@@ -55,19 +58,33 @@ const ChatContainer = () => {
 		}
 	}, [state?.chatSessions, id]);
 
+	useEffect(() => {
+		scrollToBottom();
+	}, [messages]);
+
 	return (
 		<div className="mx-auto p-4 w-full h-[90vh] flex">
 			{state.chatSessions?.length ? (
 				<div className="w-full flex flex-col justify-end">
-					<div className="overflow-y-auto pb-5">
-						<div className="">
-							{messages?.map((msg, index) => (
-								<ChatMessage key={index} message={msg.content} isUser={msg.role === 'user'} />
-							))}
-						</div>
+					<div
+						className="overflow-y-auto pb-5 scrollbarNone"
+						style={{ scrollBehavior: 'smooth' }}
+						ref={chatContainerRef}
+					>
+						{loadMessages ? (
+							<div className="flex items-center justify-center w-full h-full">
+								<span className="loading loading-spinner loading-lg"></span>
+							</div>
+						) : (
+							<div className="">
+								{messages?.map((msg, index) => (
+									<ChatMessage key={index} message={msg.content} isUser={msg.role === 'user'} />
+								))}
+							</div>
+						)}
 					</div>
 					{loading && <span className="loading loading-dots loading-md mt-3"></span>}
-					<ChatInput onSendMessage={handleSendMessage} loading={loading} />
+					<ChatInput onSendMessage={handleSendMessage} loading={loading || loadMessages} />
 				</div>
 			) : (
 				<StartSession />
