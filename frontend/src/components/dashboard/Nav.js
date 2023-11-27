@@ -44,7 +44,7 @@ const Nav = ({ showAside, toggleAside }) => {
 	};
 
 	return (
-		<div className="navbar dark:bg-gray-900 dark:border-gray-700 z-20 left-0 lg:left-auto lg:px-10">
+		<div className="navbar dark:bg-gray-900 border-b dark:border-gray-700 border-gray-200 shadow z-20 left-0 lg:left-auto lg:px-10">
 			<div className="navbar-start lg:hidden">
 				<Link href="/" className="btn btn-ghost text-primary text-xl">
 					DiagnoSync

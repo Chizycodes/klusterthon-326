@@ -41,8 +41,8 @@ const Aside = () => {
 				<div className="mt-6">
 					<div className="flex items-center justify-between mt-6">
 						<Link href="#" className="flex items-center gap-x-2">
-							<div className="w-8 h-8 rounded-full text-white uppercase bg-primary text-sm">
-								<div className="h-full flex items-center justify-center">{state?.user?.name?.slice(0, 2)}</div>
+							<div className="w-8 h-8 rounded-full dark:text-white uppercase bg-primary text-sm">
+								<div className="h-full flex items-center justify-center text-white">{state?.user?.name?.slice(0, 2)}</div>
 							</div>
 							<span className="text-sm font-medium text-gray-700 dark:text-gray-200">{state?.user?.name}</span>
 						</Link>

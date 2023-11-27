@@ -49,40 +49,40 @@ const LoginComp = () => {
 		<>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<div>
-					<label htmlFor="email" className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
+					{/* <label htmlFor="email" className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
 						Email Address
-					</label>
+					</label> */}
 					<input
 						type="email"
 						name="email"
 						id="email"
-						placeholder="example@example.com"
+						placeholder="Email Address"
 						className={`input-main ${errors.email ? 'border-red-500' : ''}`}
 						{...register('email')}
 					/>
 					{errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
 				</div>
 
-				<div className="mt-6">
-					<div className="flex justify-between mb-2">
-						<label htmlFor="password" className="text-sm text-gray-600 dark:text-gray-200">
+				<div className="mt-4">
+					<div className="flex justify-end mb-2">
+						{/* <label htmlFor="password" className="text-sm text-gray-600 dark:text-gray-200">
 							Password
-						</label>
-						<a href="#" className="text-sm text-gray-400 focus:text-blue-500 hover:text-blue-500 hover:underline">
-							Forgot password?
-						</a>
+						</label> */}
 					</div>
 
 					<input
 						type="password"
 						name="password"
 						id="password"
-						placeholder="Your Password"
+						placeholder="Password"
 						className={`input-main ${errors.password ? 'border-red-500' : ''}`}
 						{...register('password')}
 					/>
 					{errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
 				</div>
+				<Link href="#" className="text-sm text-gray-500 focus:text-primary hover:text-blue-500 hover:underline">
+					Forgot password?
+				</Link>
 
 				<div className="mt-6">
 					<button type="submit" className="button-main" disabled={loading}>
@@ -91,7 +91,7 @@ const LoginComp = () => {
 				</div>
 			</form>
 
-			<p className="mt-6 text-sm text-center text-gray-400">
+			<p className="mt-6 text-sm text-center text-gray-500">
 				Don't have an account yet?{' '}
 				<Link href="/signup" className="text-primary focus:outline-none focus:underline hover:underline">
 					Sign up
