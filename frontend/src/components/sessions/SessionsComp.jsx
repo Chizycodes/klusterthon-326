@@ -62,22 +62,22 @@ const SessionsComp = () => {
 	return (
 		<div className="flex flex-col gap-5 mt-5">
 			{state?.chatSessions?.map((item, i) => (
-				<div key={item?._id} className={`card shadow border dark:bg-gray-300 dark:text-primary-content`}>
+				<div key={item?._id} className={`card shadow border dark:bg-gray-300 bg-white`}>
 					<Link href={`/${item?._id}`}>
 						<div className="card-body">
-							<h2 className="card-title text-gray-700 dark:text-white">{item?.title}</h2>
-							<p className="text-gray-500 dark:text-white">
+							<h2 className="card-title text-gray-700 dark:text-gray-900">{item?.title}</h2>
+							<p className="text-gray-500 dark:text-gray-800">
 								{item?.createdAt && moment(item?.createdAt).format('MMMM D, YYYY')}
 							</p>
 						</div>
 					</Link>
 					<div className="dropdown dropdown-end absolute top-0 right-0">
-						<div tabIndex={0} role="button" className="btn px-4 py-2 bg-transparent border-none">
+						<div tabIndex={0} role="button" className="btn px-4 py-2 bg-transparent border-none hover:bg-slate-400">
 							<Image src={MoreIcon} width={30} height={30} alt="more" />
 						</div>
 
 						<ul className="dropdown-content z-[1] menu p-2 border border-gray-300 shadow-md bg-gray-100 rounded-box w-52 dark:text-white text-gray-600 text-md">
-							<li className="hover:bg-primary hover:text-white rounded-lg">
+							<li className="dark:text-gray-600 hover:bg-primary hover:text-white rounded-lg">
 								<button
 									disabled={loading}
 									onClick={() => {
@@ -88,7 +88,7 @@ const SessionsComp = () => {
 									Rename
 								</button>
 							</li>
-							<li className="hover:bg-primary hover:text-white rounded-lg">
+							<li className="dark:text-gray-600 hover:bg-primary hover:text-white rounded-lg">
 								<button disabled={loading} onClick={() => handleDelete(item?._id)}>
 									Delete
 								</button>

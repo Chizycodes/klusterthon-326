@@ -8,7 +8,8 @@ const ChatInput = ({ onSendMessage, loading }) => {
 		setInputMessage(e.target.value);
 	};
 
-	const handleSendMessage = () => {
+	const handleSendMessage = (e) => {
+		e.preventDefault();
 		if (inputMessage.trim() !== '') {
 			onSendMessage(inputMessage);
 			setInputMessage('');

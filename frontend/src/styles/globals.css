@@ -49,10 +49,11 @@
   }
 
   .scrollbarNone::-webkit-scrollbar {
-    display: none;
+    display: none !important;
+    scrollbar-width: none !important;
   } 
   .scrollbarNone {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
   }
 }
